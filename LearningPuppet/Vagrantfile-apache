@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# README
+#
+# Getting Started:
+# 1. vagrant plugin install vagrant-hostmanager
+# 2. vagrant up
+# 3. vagrant ssh
+#
+# This should put you at the control host
+#  with access, by name, to other vms
+
+VAGRANT_API_VERSION = "2"
+
+Vagrant.configure(VAGRANT_API_VERSION) do |config|
+  config.vm.box = "apache/trusty64"
+  config.vm.box_version = "1.0.0"
+  
+  config.vm.define "apache-vagrant" do |ubuntu|
+    ubuntu.vm.network "private_network", ip: "192.168.135.200"
+    ubuntu.vm.hostname = "ubuntu-gui-vagrant"
+    ubuntu.vm.provision "file", source: "~/Projects/Private/Ubuntu-ansible/ansible/inventories/public_key", destination: "/tmp/public_key"
+    ubuntu.vm.provision "shell", :inline => <<-SCRIPT
+      set -e
+    
+      cat /tmp/public_key >> /home/vagrant/.ssh/authorized_keys
+    SCRIPT
+    
+    ubuntu.vm.provider "virtualbox" do |vb|
+      vb.memory = "4096"
+    end
+  end
+end
