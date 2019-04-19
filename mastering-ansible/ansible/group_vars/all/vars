@@ -1,0 +1,7 @@
+---
+db_name: demo
+db_user: demo
+db_pass: "{{ vault_db_pass }}"
+ansible_port: 22
+ansible_user: vagrant
+ansible_ssh: ~/.ssh/id_rsa_masteringansible

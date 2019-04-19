@@ -1,0 +1,48 @@
+---
+- name: install tools
+  notify: apt_update
+  apt: name={{item}} state=present
+  with_items:
+    - htop
+    - net-tools
+    - tmux
+    - guake
+    - keepass2
+    - vagrant
+    - virtualbox
+    - tree
+    - mc
+    - rpm
+    - p7zip-full
+    - curl 
+  tags: [ 'packages' ]
+
+
+# Set everything up,
+#   no sudo password,
+#   download necessary packages (wget)
+#     run sudo apt update afte this
+#   install debian packages
+#     atom
+#     vagrant?
+#     chromium
+#     sublime-text
+#     fuse???
+#   make needed folders
+
+# chromium
+snap install  chromium
+
+
+# vsode
+sudo apt update
+sudo apt install software-properties-common apt-transport-https wget
+wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+sudo apt install code
+
+# gnome tweak tool
+sudo apt-add-repository universe
+sudo apt install gnome-tweak-tool
+
+
