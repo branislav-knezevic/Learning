@@ -14,29 +14,28 @@
 VAGRANT_API_VERSION = "2"
 
 Vagrant.configure("2") do |config|
-  config.hostmanager.enabled = true
   config.vm.box = "bento/ubuntu-18.04"
 
-  config.vm.define "PuppetMaster", primary: true do |master|
-    master.vm.box = "ubuntu-18.04"
-    master.vm.box_url = "bento/ubutnu-18.04"
+  config.vm.define "puppet-master", primary: true do |master|
+    master.vm.box = "bento/ubuntu-18.04"
+    master.vm.box_url = "bento/ubuntu-18.04"
 
-    master.vm.network "private_network", ip: "192.168.135.10"
-    master.vm.hostname = "PuppetMaster"
+    master.vm.network "private_network", ip: "192.168.135.100"
+    master.vm.hostname = "puppet-master"
     
     master.vm.provider "virtualbox" do |vb|
       vb.memory = "4096"
     end
   end  
-  config.vm.define "agent-1", do |agent-1|
-    agent-1.vm.box = "centos-7"
-    agent-1.vm.box_url = "centos/7"
+  config.vm.define "agent-centos" do |agent1|
+    agent1.vm.box = "centos/7"
+    agent1.vm.box_url = "centos/7"
 
-    agent-1.vm.network "private_network", ip: "192.168.135.11"
-    agent-1.vm.hostname = "CentOS-7"
+    agent1.vm.network "private_network", ip: "192.168.135.101"
+    agent1.vm.hostname = "agent-centos"
     
-    agent-1.vm.provider "virtualbox" do |vb|
-      vb.memory = "4096"
+    agent1.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
     end
   end  
 end
